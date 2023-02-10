@@ -1,14 +1,13 @@
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
+import { todos } from '../shared/todos';
 
 function Home() {
 
     // todo 리스트 초기값
-    const [todo, setTodo] = useState([
-        { id: 1, title: "리액트", desc: "리액트 기초 공부", done: false },
-        { id: 2, title: "스프링", desc: "스프링 기초 공부", done: false },
-        { id: 3, title: "노드", desc: "끝났다", done: true },
-    ]);
+    const [todo, setTodo] = useState(todos);    // []안에 넣으면 이중배열이 됨
+
+    console.log(todo)
 
     const [title, setTitle] = useState('')
     const [desc, setDesc] = useState('')
@@ -24,7 +23,7 @@ function Home() {
     // 추가 버튼
     const addButton = () => {
         const newTodo = {
-            id: todo[todo.length - 1] + 1,
+            id: todo.length + 1,
             title,
             desc,
             done: false,
@@ -112,7 +111,6 @@ function Home() {
 
                     <div className='container-todo-list'>
                         <h3>Done...</h3>
-                        <p className='detail'>상세보기</p>
                         {
                             todo.filter(function (work) {
                                 return work.done === true
@@ -121,6 +119,7 @@ function Home() {
                                     <div
                                         key={item.id}
                                     >
+                                        <p className='detail'>상세보기</p>
                                         <h3>{item.title}</h3>
                                         <p>{item.desc}</p>
                                         <button onClick={() => deleteButton(item.id)}>삭제하기</button>
