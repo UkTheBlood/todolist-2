@@ -7,7 +7,7 @@ function Home() {
     // todo 리스트 초기값
     const [todo, setTodo] = useState(todos);    // []안에 넣으면 이중배열이 됨
 
-    console.log(todo)
+    // console.log(todo)
 
     const [title, setTitle] = useState('')
     const [desc, setDesc] = useState('')
@@ -119,7 +119,9 @@ function Home() {
                                     <div
                                         key={item.id}
                                     >
-                                        <p className='detail'>상세보기</p>
+                                        <Link
+                                            key={item.id}
+                                            to={`/working/${item.id}`}>상세보기</Link>
                                         <h3>{item.title}</h3>
                                         <p>{item.desc}</p>
                                         <button onClick={() => deleteButton(item.id)}>삭제하기</button>
