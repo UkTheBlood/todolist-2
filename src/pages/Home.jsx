@@ -1,8 +1,16 @@
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
 import { todos } from '../shared/todos';
+import { useSelector } from 'react-redux';
 
 function Home() {
+    
+    const data = useSelector((state) => {
+        return state;
+    })
+
+    console.log("data", data)
+    // => title{}, desc{}, todo{}
 
     // todo 리스트 초기값
     const [todo, setTodo] = useState(todos);    // []안에 넣으면 이중배열이 됨
