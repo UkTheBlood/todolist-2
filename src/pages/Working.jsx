@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import { useParams } from "react-router-dom";
 
-function working() {
-  return (
-    <div>working</div>
-  )
+function Working() {
+
+    const params = useParams();
+    console.log('params', params)
+
+    return <div>Working</div>
 }
 
-export default working
+export default Working;
