@@ -1,6 +1,7 @@
 import { todos } from "../../shared/todos";
 
 const add_Todo = 'todo/add_Todo'
+const delete_Todo = 'todo/delete_Todo'
 
 export const addTodo = (payload) => {
     return {
@@ -9,13 +10,20 @@ export const addTodo = (payload) => {
     }
 }
 
+export const deleteTodo = (payload) => {
+    return {
+        type: delete_Todo,
+        payload,
+    }
+}
+
 const initialState = {
-    todo: todos,    
+    todo: todos,
     // {id: 1, title: '리액트', desc: '리액트 기초 공부', done: false}
     // {id: 2, title: '스프링', desc: '스프링 기초 공부', done: false}
     // {id: 3, title: '노드', desc: '끝났다', done: true}
 }
-    console.log(initialState.todo)      // 초기값 설정 완료
+console.log(initialState.todo)      // 초기값 설정 완료
 
 
 // 위의 코드와 동일 const [todo, setTodo] = useState("")
@@ -26,6 +34,10 @@ const todo = (state = initialState, action) => {
         case add_Todo:
             return {
                 todo: [...state.todo, action.payload]
+            }
+        case delete_Todo:
+            return {
+                todo: action.payload
             }
         default:
             return state;

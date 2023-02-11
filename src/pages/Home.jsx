@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { todos } from '../shared/todos';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTodo } from '../redux/modules/todo';
+import { deleteTodo } from '../redux/modules/todo';
 
 function Home() {
     
@@ -55,7 +56,8 @@ function Home() {
             return todo.id !== id
         });
 
-        setTodo(newTodo);
+        // setTodo(newTodo);
+        dispatch(deleteTodo(newTodo))
     }
 
     // 완료 버튼
