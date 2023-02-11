@@ -6,6 +6,8 @@ function Working() {
 
     const params = useParams();
 
+    // useSelector로 가져오기 (리덕스에서 가져오기)
+
     const foundTodos = todos.find((item) => {
         return item.id === parseInt(params.id);
     })

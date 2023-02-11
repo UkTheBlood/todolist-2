@@ -1,16 +1,19 @@
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
 import { todos } from '../shared/todos';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { addTodo } from '../redux/modules/todo';
 
 function Home() {
     
     const data = useSelector((state) => {
-        return state;
+        return state.todo.todo;
     })
 
-    console.log("data", data)
-    // => title{}, desc{}, todo{}
+    const dispatch = useDispatch();
+
+    console.log("Data", data)       // 콘솔을 찍어보자
+
 
     // todo 리스트 초기값
     const [todo, setTodo] = useState(todos);    // []안에 넣으면 이중배열이 됨
@@ -31,20 +34,24 @@ function Home() {
     // 추가 버튼
     const addButton = () => {
         const newTodo = {
-            id: todo.length + 1,
+            id: Math.random(),
             title,
             desc,
             done: false,
         }
 
-        setTodo([...todo, newTodo]);
+        // setTodo([...todo, newTodo]);        // payload에 newTodo를 넣어줌 (추가할 todo)
+        
+        dispatch(addTodo(newTodo))
         setTitle('');
         setDesc('');
     }
 
+
+
     // 삭제 버튼
     const deleteButton = (id) => {
-        const newTodo = todo.filter(function (todo) {
+        const newTodo = data.filter(function (todo) {
             return todo.id !== id
         });
 
@@ -93,7 +100,7 @@ function Home() {
                         <h3>Working...</h3>
 
                         {
-                            todo.filter(function (work) {
+                            data.filter(function (work) {
                                 return work.done === false
                             }).map(item => {
                                 return (
@@ -120,7 +127,7 @@ function Home() {
                     <div className='container-todo-list'>
                         <h3>Done...</h3>
                         {
-                            todo.filter(function (work) {
+                            data.filter(function (work) {
                                 return work.done === true
                             }).map(item => {
                                 return (
