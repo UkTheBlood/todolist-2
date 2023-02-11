@@ -4,6 +4,8 @@ import { todos } from '../shared/todos';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTodo } from '../redux/modules/todo';
 import { deleteTodo } from '../redux/modules/todo';
+import { doneTodo } from '../redux/modules/todo';
+import { cancelTodo } from '../redux/modules/todo';
 
 function Home() {
     
@@ -61,17 +63,29 @@ function Home() {
     }
 
     // 완료 버튼
+    // const doneButton = (id) => {
+    //     setTodo((x) =>
+    //         x.map((todo) => (todo.id === id ? { ...todo, done: !todo.done } : todo))
+    //     )
+    // }
+
     const doneButton = (id) => {
-        setTodo((x) =>
-            x.map((todo) => (todo.id === id ? { ...todo, done: !todo.done } : todo))
-        )
+        const newTodo = data.map((todo) => (todo.id === id ? { ...todo, done: !todo.done} : todo))
+
+        dispatch(doneTodo(newTodo))
     }
 
     // 취소 버튼
+    // const cancelButton = (id) => {
+    //     setTodo((x) =>
+    //         x.map((todo) => (todo.id === id ? { ...todo, done: !todo.done } : todo))
+    //     )
+    // }
+
     const cancelButton = (id) => {
-        setTodo((x) =>
-            x.map((todo) => (todo.id === id ? { ...todo, done: !todo.done } : todo))
-        )
+        const newTodo = data.map((todo) => (todo.id === id ? { ...todo, done: !todo.done} : todo))
+
+        dispatch(cancelTodo(newTodo))
     }
 
     return (

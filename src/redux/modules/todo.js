@@ -2,6 +2,8 @@ import { todos } from "../../shared/todos";
 
 const add_Todo = 'todo/add_Todo'
 const delete_Todo = 'todo/delete_Todo'
+const done_Todo = 'todo/done_Todo'
+const cancel_Todo = 'todo/cancel_Todo'
 
 export const addTodo = (payload) => {
     return {
@@ -16,6 +18,21 @@ export const deleteTodo = (payload) => {
         payload,
     }
 }
+
+export const doneTodo = (payload) => {
+    return {
+        type: done_Todo,
+        payload,
+    }
+}
+
+export const cancelTodo = (payload) => {
+    return {
+        type: cancel_Todo,
+        payload,
+    }
+}
+
 
 const initialState = {
     todo: todos,
@@ -36,6 +53,14 @@ const todo = (state = initialState, action) => {
                 todo: [...state.todo, action.payload]
             }
         case delete_Todo:
+            return {
+                todo: action.payload
+            }
+        case done_Todo:
+            return {
+                todo: action.payload
+            }
+        case cancel_Todo:
             return {
                 todo: action.payload
             }
