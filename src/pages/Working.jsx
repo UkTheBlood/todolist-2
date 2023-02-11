@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
-import { todos } from "../shared/todos";
 import { useSelector } from "react-redux";
+import styled from 'styled-components';
 
 function Working() {
 
@@ -23,15 +23,34 @@ function Working() {
     console.log('datas', datas)
 
     return (
-        <div>
-            <span>ID : {datas.id}</span>
+        <Container>
+            <Center>
+                <span>ID : {datas.id}</span>
 
-            <Link to={'/'}><button>이전으로</button></Link>
+                <Link to={'/'}><button>이전으로</button></Link>
 
-            <h3>{datas.title}</h3>
-            <p>{datas.desc}</p>
-        </div>
+                <h3>{datas.title}</h3>
+                <p>{datas.desc}</p>
+            </Center>
+        </Container>
     )
 }
 
 export default Working;
+
+const Container = styled.div`
+    width: 1200px;
+    margin: auto;
+`
+
+const Center = styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 250px;
+    height: 200px;
+    margin: -150px 0px 0px -200px;
+    padding: 10px;
+    border: 3px solid green;
+    border-radius: 10px;
+`
