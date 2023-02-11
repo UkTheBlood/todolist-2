@@ -6,27 +6,30 @@ import { useSelector } from "react-redux";
 function Working() {
 
     const params = useParams();
-    console.log(params);
+    console.log("params", params);
 
     // useSelector로 가져오기 (리덕스에서 가져오기)
     const data = useSelector((state) => {
         return state.todo.todo;
     })
 
-    const foundTodos = todos.find((item) => {
-        return item.id === parseInt(params.id);
+    console.log("data", data);
+
+    const datas = data.find((item) => {
+        console.log("item", item)
+        return String(item.id) === params.id;
     })
 
-    console.log(foundTodos)
+    console.log('datas', datas)
 
     return (
         <div>
-            <span>ID : {foundTodos.id}</span>
+            <span>ID : {datas.id}</span>
 
             <Link to={'/'}><button>이전으로</button></Link>
 
-            <h3>{foundTodos.title}</h3>
-            <p>{foundTodos.desc}</p>
+            <h3>{datas.title}</h3>
+            <p>{datas.desc}</p>
         </div>
     )
 }
