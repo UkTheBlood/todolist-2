@@ -2,11 +2,8 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react';
 import { todos } from '../shared/todos';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodo } from '../redux/modules/todo';
-import { deleteTodo } from '../redux/modules/todo';
-import { doneTodo } from '../redux/modules/todo';
-import { cancelTodo } from '../redux/modules/todo';
 import styled from 'styled-components';
+import { add_Todo, cancel_Todo, delete_Todo, done_Todo } from '../redux/modules/todo';
 
 function Home() {
 
@@ -16,11 +13,10 @@ function Home() {
 
     const dispatch = useDispatch();
 
-    console.log("Data", data)       // 콘솔을 찍어보자
 
 
     // todo 리스트 초기값
-    const [todo, setTodo] = useState(todos);    // []안에 넣으면 이중배열이 됨
+    // const [todo, setTodo] = useState(todos);    // []안에 넣으면 이중배열이 됨
 
     // console.log(todo)
 
@@ -46,7 +42,7 @@ function Home() {
 
         // setTodo([...todo, newTodo]);        // payload에 newTodo를 넣어줌 (추가할 todo)
 
-        dispatch(addTodo(newTodo))
+        dispatch(add_Todo(newTodo))
         setTitle('');
         setDesc('');
     }
@@ -60,7 +56,7 @@ function Home() {
         });
 
         // setTodo(newTodo);
-        dispatch(deleteTodo(newTodo))
+        dispatch(delete_Todo(newTodo))
     }
 
     // 완료 버튼
@@ -72,8 +68,9 @@ function Home() {
 
     const doneButton = (id) => {
         const newTodo = data.map((todo) => (todo.id === id ? { ...todo, done: !todo.done } : todo))
+        console.log(newTodo)
 
-        dispatch(doneTodo(newTodo))
+        dispatch(done_Todo(newTodo))
     }
 
     // 취소 버튼
@@ -86,7 +83,7 @@ function Home() {
     const cancelButton = (id) => {
         const newTodo = data.map((todo) => (todo.id === id ? { ...todo, done: !todo.done } : todo))
 
-        dispatch(cancelTodo(newTodo))
+        dispatch(cancel_Todo(newTodo))
     }
 
     return (

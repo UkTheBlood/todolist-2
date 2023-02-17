@@ -39,17 +39,18 @@ function Working() {
 export default Working;
 
 const Container = styled.div`
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    display: flex;
     width: 1200px;
     margin: auto;
 `
 
 const Center = styled.div`
-    position: absolute;
-    top: 50%;
-    left: 50%;
     width: 250px;
     height: 200px;
-    margin: -150px 0px 0px -200px;
+    margin: auto;
     padding: 10px;
     border: 3px solid green;
     border-radius: 10px;
