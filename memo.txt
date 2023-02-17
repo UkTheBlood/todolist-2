@@ -1,0 +1,7 @@
+1. thunk 함수 구현
+2. 리듀서 로직 규현 : reducers -> extraReducers
+    - 서버 통신 : 100% 성공 (x)
+    - 지금까지의 redux state(todos, counter)
+    - 앞으로의 state(isLoadin, isError, date)
+3. 기능 확인 (network) + devTools
+4. store의 값 조회 + 화면에 렌더링

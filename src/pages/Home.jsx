@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { todos } from '../shared/todos';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { add_Todo, cancel_Todo, delete_Todo, done_Todo } from '../redux/modules/todo';
+import { add_Todo, cancel_Todo, delete_Todo, done_Todo, __getTodos } from '../redux/modules/todo';
+
 
 function Home() {
 
@@ -11,7 +12,13 @@ function Home() {
         return state.todo.todo;
     })
 
+    const { isLoading, error, todos } = data;
+
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(__getTodos())
+    }, [])
 
 
 
@@ -86,8 +93,23 @@ function Home() {
         dispatch(cancel_Todo(newTodo))
     }
 
+
+
+    if (isLoading) {
+        return <div>로딩중...</div>;
+    }
+
+    if (error) {
+        return <div>{error.message}</div>
+    }
+
     return (
         <Wrapper>
+            <div>
+                {/* {todos.map((item) => {
+                    return <div key={item.id}>{todos.title}</div>
+                })} */}
+            </div>
             <Header>
                 <Todolist>My Todo List</Todolist>
                 <Reacttitle>React</Reacttitle>

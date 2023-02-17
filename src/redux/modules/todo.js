@@ -1,5 +1,127 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { todos } from "../../shared/todos";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+
+const initialState = {
+    todo: todos,
+    isLoading: false,
+    isError: false,
+    error: null,
+}
+
+
+export const __getTodos = createAsyncThunk(
+    "getTodos",
+    async (payload, thunkAPI) => {  // 비동기 처리 : async
+        try {
+            // thunkAPI.fulfillWithValue 혹은 thunkAPI.rejectWithValue로 extraReducers로 보내줌
+            const response = await axios.get('http://localhost:4000/todos')
+            console.log(response)
+            // response -> json에 들어있는 data
+
+            // toolkit에서 제공하는 API
+            // Promise -> resolve(=network 요청이 성공한 경우) -> dispatch해주는 기능을 가진 API
+            return thunkAPI.fulfillWithValue(response.data);
+        } catch (error) {
+            console.log(error)
+            return thunkAPI.rejectWithValue(error);
+        }
+
+    }
+);
+
+
+const todoSlice = createSlice({
+    name: "todos",
+    initialState: initialState,
+    reducers: {
+        add_Todo: (state, action) => {
+            state.todo = [...state.todo, action.payload]
+        },
+        delete_Todo: (state, action) => {
+            state.todo = action.payload
+        },
+        done_Todo: (state, action) => {
+            state.todo = action.payload
+        },
+        cancel_Todo: (state, action) => {
+            state.todo = action.payload
+        },
+    },
+    extraReducers: {        // state는 위의 initialState를 말함
+        [__getTodos.pending]: (state, action) => {
+            // 아직 통신이 진행중일 때
+            state.isLoading = true;
+            state.isError = false;
+        },
+
+        // __getTodos의 fulfillWithValue로 찾아감
+        [__getTodos.fulfilled]: (state, action) => {
+            state.isLoading = false;
+            state.isError = false;
+            state.todos = action.payload
+        },
+        [__getTodos.rejected]: (state, action) => {
+            state.isLoading = false;
+            state.isError = true;
+            state.error = action.payload;
+        }
+    }
+});
+
+export default todoSlice.reducer;
+
+export const { add_Todo, delete_Todo, done_Todo, cancel_Todo } = todoSlice.actions
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // const add_Todo = 'todo/add_Todo'
 // const delete_Todo = 'todo/delete_Todo'
@@ -35,17 +157,6 @@ import { todos } from "../../shared/todos";
 // }
 
 
-const initialState = {
-    todo: todos,
-    // {id: 1, title: '리액트', desc: '리액트 기초 공부', done: false}
-    // {id: 2, title: '스프링', desc: '스프링 기초 공부', done: false}
-    // {id: 3, title: '노드', desc: '끝났다', done: true}
-}
-console.log(initialState.todo)      // 초기값 설정 완료
-
-
-// 위의 코드와 동일 const [todo, setTodo] = useState("")
-
 // 밑에 있는 부분이 리듀서임
 // const todo = (state = initialState, action) => {
 //     switch (action.type) {
@@ -71,26 +182,3 @@ console.log(initialState.todo)      // 초기값 설정 완료
 // }
 
 // export default todo;
-
-const todoSlice = createSlice({
-    name: todos,
-    initialState: initialState,
-    reducers: {
-        add_Todo: (state, action) => {
-            state.todo = [...state.todo, action.payload]
-        },
-        delete_Todo: (state, action) => {
-            state.todo = action.payload
-        },
-        done_Todo: (state, action) => {
-            state.todo = action.payload
-        },
-        cancel_Todo: (state, action) => {
-            state.todo =  action.payload
-        },
-    }
-});
-
-export default todoSlice.reducer;
-
-export const {add_Todo, delete_Todo, done_Todo, cancel_Todo} = todoSlice.actions
